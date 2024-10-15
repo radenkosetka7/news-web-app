@@ -2,6 +2,7 @@ package com.example.news_api.controllers;
 
 import com.example.news_api.models.requests.CommentRequest;
 import com.example.news_api.models.responses.CommentResponse;
+import com.example.news_api.models.responses.TopNewsResponse;
 import com.example.news_api.services.ICommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +25,11 @@ public class CommentController {
     @GetMapping("/{id}")
     public List<CommentResponse> getByNewsId(@PathVariable Integer id) {
         return commentService.getByNewsId(id);
+    }
+
+    @GetMapping("/top-news")
+    public List<TopNewsResponse> findTop10MostCommentedNews()
+    {
+        return commentService.findTop10MostCommentedNews();
     }
 }

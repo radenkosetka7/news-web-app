@@ -1,4 +1,42 @@
 package com.example.news_api.services.impl;
 
-public class StatisticService {
+import com.example.news_api.models.entities.Statistic;
+import com.example.news_api.models.requests.StatisticRequest;
+import com.example.news_api.models.responses.StatisticResponse;
+import com.example.news_api.repositories.StatisticRepository;
+import com.example.news_api.services.IStatisticService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class StatisticService implements IStatisticService {
+
+    private final StatisticRepository statisticRepository;
+    private final ModelMapper modelMapper;
+
+    @Override
+    public StatisticResponse insert(StatisticRequest request) {
+        Statistic statistic = modelMapper.map(request, Statistic.class);
+        statistic.setAccessDate(new Date());
+        return modelMapper.map(statisticRepository.saveAndFlush(statistic), StatisticResponse.class);
+    }
+
+    @Override
+    public List<StatisticResponse> findLastWeekStatistics() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -7);
+        Date date = calendar.getTime();
+        return statisticRepository.findLastWeekStatistics(date)
+                .stream().map(s->modelMapper.map(s,StatisticResponse.class))
+                .collect(Collectors.toList());
+    }
 }
