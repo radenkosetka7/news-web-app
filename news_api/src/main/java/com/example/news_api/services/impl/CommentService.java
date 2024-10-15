@@ -3,7 +3,9 @@ package com.example.news_api.services.impl;
 import com.example.news_api.models.entities.Comment;
 import com.example.news_api.models.requests.CommentRequest;
 import com.example.news_api.models.responses.CommentResponse;
+import com.example.news_api.models.responses.TopNewsResponse;
 import com.example.news_api.repositories.CommentRepository;
+import com.example.news_api.repositories.TopCommentRepository;
 import com.example.news_api.services.ICommentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class CommentService implements ICommentService {
 
     private final CommentRepository commentRepository;
+    private final TopCommentRepository topCommentRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -31,8 +34,7 @@ public class CommentService implements ICommentService {
                     .orElseThrow(() -> new IllegalArgumentException("Parent comment not found"));
             comment.setParentComment(parentComment);
         }
-        comment = commentRepository.saveAndFlush(comment);
-        return modelMapper.map(comment, CommentResponse.class);
+        return modelMapper.map(commentRepository.saveAndFlush(comment), CommentResponse.class);
     }
 
     @Override
@@ -42,6 +44,11 @@ public class CommentService implements ICommentService {
                 .map(comment -> modelMapper.map(comment, CommentResponse.class))
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<TopNewsResponse> findTop10MostCommentedNews() {
+        return topCommentRepository.findAll().stream().map(topComment -> modelMapper.map(topComment, TopNewsResponse.class)).collect(Collectors.toList());
     }
 
 
