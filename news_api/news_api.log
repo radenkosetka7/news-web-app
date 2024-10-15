@@ -1,0 +1,25 @@
+2024-10-15T17:47:55.585+02:00  INFO 9684 --- [news_api] [main] c.example.news_api.NewsApiApplication    : Starting NewsApiApplication using Java 22.0.2 with PID 9684 (C:\Users\radenko.setka\Desktop\materijali\news_web_app\news_api\target\classes started by radenko.setka in C:\Users\radenko.setka\Desktop\materijali\news_web_app\news_api)
+2024-10-15T17:47:55.586+02:00  INFO 9684 --- [news_api] [main] c.example.news_api.NewsApiApplication    : No active profile set, falling back to 1 default profile: "default"
+2024-10-15T17:47:56.094+02:00  INFO 9684 --- [news_api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-15T17:47:56.138+02:00  INFO 9684 --- [news_api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 38 ms. Found 3 JPA repository interfaces.
+2024-10-15T17:47:56.530+02:00  INFO 9684 --- [news_api] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9001 (http)
+2024-10-15T17:47:56.539+02:00  INFO 9684 --- [news_api] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-15T17:47:56.540+02:00  INFO 9684 --- [news_api] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2024-10-15T17:47:56.578+02:00  INFO 9684 --- [news_api] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-15T17:47:56.579+02:00  INFO 9684 --- [news_api] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 960 ms
+2024-10-15T17:47:56.659+02:00  INFO 9684 --- [news_api] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-15T17:47:56.874+02:00  INFO 9684 --- [news_api] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@435e416c
+2024-10-15T17:47:56.876+02:00  INFO 9684 --- [news_api] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-15T17:47:56.903+02:00  INFO 9684 --- [news_api] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-15T17:47:56.939+02:00  INFO 9684 --- [news_api] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-15T17:47:56.962+02:00  INFO 9684 --- [news_api] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-15T17:47:57.198+02:00  INFO 9684 --- [news_api] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-15T17:47:57.898+02:00  INFO 9684 --- [news_api] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-15T17:47:57.901+02:00  INFO 9684 --- [news_api] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-15T17:47:58.136+02:00  INFO 9684 --- [news_api] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-10-15T17:47:58.405+02:00  WARN 9684 --- [news_api] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-15T17:47:58.632+02:00  INFO 9684 --- [news_api] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9001 (http) with context path '/'
+2024-10-15T17:47:58.638+02:00  INFO 9684 --- [news_api] [main] c.example.news_api.NewsApiApplication    : Started NewsApiApplication in 3.338 seconds (process running for 3.721)
+2024-10-15T17:49:00.744+02:00  INFO 9684 --- [news_api] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-10-15T17:49:00.745+02:00  INFO 9684 --- [news_api] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-10-15T17:49:00.749+02:00  INFO 9684 --- [news_api] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
