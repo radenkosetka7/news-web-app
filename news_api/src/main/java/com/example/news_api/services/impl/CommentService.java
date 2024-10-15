@@ -1,5 +1,6 @@
 package com.example.news_api.services.impl;
 
+import com.example.news_api.exceptions.NotFoundException;
 import com.example.news_api.models.entities.Comment;
 import com.example.news_api.models.requests.CommentRequest;
 import com.example.news_api.models.responses.CommentResponse;
@@ -31,7 +32,7 @@ public class CommentService implements ICommentService {
         comment.setCreatedAt(new Date());
         if (request.getParentCommentId() != null) {
             Comment parentComment = commentRepository.findById(request.getParentCommentId())
-                    .orElseThrow(() -> new IllegalArgumentException("Parent comment not found"));
+                    .orElseThrow(() -> new NotFoundException("Parent comment not found"));
             comment.setParentComment(parentComment);
         }
         return modelMapper.map(commentRepository.saveAndFlush(comment), CommentResponse.class);
