@@ -11,6 +11,8 @@ import com.example.news_api.services.ICommentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -38,14 +40,19 @@ public class CommentService implements ICommentService {
         return modelMapper.map(commentRepository.saveAndFlush(comment), CommentResponse.class);
     }
 
-    @Override
-    public List<CommentResponse> getByNewsId(Integer id) {
-        List<Comment> comments = commentRepository.findByNewsId(id);
-        return comments.stream()
-                .map(comment -> modelMapper.map(comment, CommentResponse.class))
-                .collect(Collectors.toList());
 
+    @Override
+    public Page<CommentResponse> getByNewsId(Integer id,Pageable pageable) {
+        return commentRepository.findByNewsIdAndParentCommentIsNull(id,pageable)
+                .map(comment-> modelMapper.map(comment, CommentResponse.class));
     }
+
+    @Override
+    public Page<CommentResponse> getByParentCommentId(Integer id, Pageable pageable) {
+       return commentRepository.findByParentCommentId(id,pageable)
+               .map(comment-> modelMapper.map(comment, CommentResponse.class));
+    }
+
 
     @Override
     public List<TopNewsResponse> findTop10MostCommentedNews() {

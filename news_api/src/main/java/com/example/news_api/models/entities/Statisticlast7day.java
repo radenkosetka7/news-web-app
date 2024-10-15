@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,15 +17,20 @@ import org.hibernate.annotations.Immutable;
 @Data
 @Entity
 @Immutable
-@Table(name = "topcomments")
-public class Topcomment {
+@Table(name = "statisticlast7days")
+public class Statisticlast7day {
     @Id
+    @Size(max = 15)
     @NotNull
-    @Column(name = "news_id", nullable = false)
-    private Integer newsId;
+    @Column(name = "attribute", nullable = false, length = 15)
+    private String attribute;
+
+    @Size(max = 45)
+    @Column(name = "value", length = 45)
+    private String value;
 
     @NotNull
-    @Column(name = "total_comments", nullable = false)
-    private Long totalComments;
+    @Column(name = "total_visits", nullable = false)
+    private Long totalVisits;
 
 }
