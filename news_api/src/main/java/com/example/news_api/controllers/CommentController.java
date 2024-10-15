@@ -6,6 +6,9 @@ import com.example.news_api.models.responses.TopNewsResponse;
 import com.example.news_api.services.ICommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +26,19 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public List<CommentResponse> getByNewsId(@PathVariable Integer id) {
-        return commentService.getByNewsId(id);
+    public Page<CommentResponse> getByNewsId(@PathVariable Integer id, @RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "20") int size)
+    {
+        Pageable pageable = PageRequest.of(page, size);
+        return commentService.getByNewsId(id,pageable);
+    }
+
+    @GetMapping("/childs/{id}")
+    public Page<CommentResponse> getByParentId(@PathVariable Integer id, @RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "20") int size)
+    {
+        Pageable pageable = PageRequest.of(page, size);
+        return commentService.getByParentCommentId(id,pageable);
     }
 
     @GetMapping("/top-news")
