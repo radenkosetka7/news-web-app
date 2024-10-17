@@ -1,0 +1,20 @@
+.main-news .card-title .ant-card-meta-detail .ant-card-meta-title{
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+.sub .card-title .ant-card-meta-description,
+.sub .card-title .ant-card-meta-title{
+   font-size:small;
+}
+.main .card-title .ant-card-meta-title{
+    font-size:large;
+}
+
+.ant-card .ant-card-body{
+    padding: 10px;
+}
+
+.main-card {
+    margin-bottom: 20px;
+}

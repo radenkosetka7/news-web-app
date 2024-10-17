@@ -1,13 +1,17 @@
 
 .menu-color {
-    background-color: #b7c4c9;
+    background-color: #0f668b;
     display: flex;
     justify-content: center;
+    color: white;
 }
-
+.ant-menu-light .ant-menu-submenu-title,
+.menu-color .ant-menu-title-content{
+    color: white;
+}
 .root-div
 {
-    background-color: #adbabe;
+    background-color: #016e9c;
 }
 
 .custom-menu-item {
@@ -21,21 +25,24 @@
 
 
 .logo-map {
-    background-color: #adbabe;
+    background-color: #016e9c;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
     margin-left: 5%;
 
 }
 .statistic-link {
     margin-right: 10%;
     font-size: 16px;
-    color: #000;
+    color: white;
     text-decoration: none;
 }
 
 .statistic-link:hover {
     text-decoration: underline;
+}
+
+.label-menu-name {
+    font-size: 12px;
 }
