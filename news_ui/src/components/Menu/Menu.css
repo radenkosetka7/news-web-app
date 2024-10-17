@@ -1,0 +1,41 @@
+
+.menu-color {
+    background-color: #b7c4c9;
+    display: flex;
+    justify-content: center;
+}
+
+.root-div
+{
+    background-color: #adbabe;
+}
+
+.custom-menu-item {
+    font-size: 12px;
+}
+
+.app-logo {
+    width: 110px;
+    height: 50px;
+}
+
+
+.logo-map {
+    background-color: #adbabe;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: 5%;
+
+}
+.statistic-link {
+    margin-right: 10%;
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+}
+
+.statistic-link:hover {
+    text-decoration: underline;
+}
