@@ -12,12 +12,14 @@ const AppMenu = () => {
     const menuItems = useSelector((state) => state.menu.items);
     const menuStatus = useSelector((state) => state.menu.status);
     const [current, setCurrent] = useState('mail');
+    let counter = 200;
 
     useEffect(() => {
         if (menuStatus === 'idle') {
+            console.log("menuStatus", menuStatus);
             dispatch(getMenu());
         }
-    }, [dispatch, menuStatus]);
+    }, []);
 
     const items = menuItems.map((item) => {
 
@@ -33,7 +35,7 @@ const AppMenu = () => {
                 children: [
                     {
                         label: item.Naziv,
-                        key: item.meniID,
+                        key: counter++,
                     },
                     ...childrenItems,
                 ],
