@@ -7,6 +7,7 @@ import Footer from "./components/Footer/Footer";
 import SectionNews from "./pages/SectionNews/SectionNews";
 import SubsectionNews from "./pages/SubsectionNews/SubsectionNews";
 
+
 function App() {
     return (
         <BrowserRouter>
