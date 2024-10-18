@@ -5,18 +5,17 @@ import {getMenu} from "../../redux-store/menuSlice";
 import Logo from "../../assets/logo.png";
 
 import './Menu.css'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 const AppMenu = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const menuItems = useSelector((state) => state.menu.items);
     const menuStatus = useSelector((state) => state.menu.status);
-    const [current, setCurrent] = useState('mail');
-    let counter = 200;
+
 
     useEffect(() => {
         if (menuStatus === 'idle') {
-            console.log("menuStatus", menuStatus);
             dispatch(getMenu());
         }
     }, []);
@@ -25,7 +24,7 @@ const AppMenu = () => {
 
         const childrenItems = item.Kategorije ? item.Kategorije.map((child) => ({
             label: <span className="custom-menu-item">{child.Naziv}</span>,
-            key: child.meniID,
+            key: `${item.Naziv}-${child.roditeljID}-${child.meniID}-${child.Naziv}`,
         })) : [];
 
         if (childrenItems.length > 0) {
@@ -35,7 +34,7 @@ const AppMenu = () => {
                 children: [
                     {
                         label: item.Naziv,
-                        key: counter++,
+                        key: `${item.meniID}-${item.Naziv}`,
                     },
                     ...childrenItems,
                 ],
@@ -44,8 +43,20 @@ const AppMenu = () => {
 
     });
     const onClick = (e) => {
-        console.log('click ', e);
-        setCurrent(e.key);
+        const parts = e.key.split('-');
+        if (parts.length === 2) {
+            const [meniId, Naziv] = parts;
+            const foramattedNaziv = Naziv.trim().toLowerCase().replace(/ /g, '-');
+            navigate(`/${foramattedNaziv}`, { state: { meniId }});
+        }
+        else
+        {
+            const [Naziv,meniId,childId,ChildNaziv] = parts;
+            const foramattedNaziv = Naziv.trim().toLowerCase().replace(/ /g, '-');
+            const foramattedNazivChild = ChildNaziv.trim().toLowerCase().replace(/ /g, '-');
+            navigate(`/${foramattedNaziv}/${foramattedNazivChild}`, { state: { childId, meniId }});
+        }
+
     };
     return (
         <div className="root-div">
@@ -57,7 +68,7 @@ const AppMenu = () => {
                     Statistika
                 </Link>
             </div>
-            <Menu className="menu-color" onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
+            <Menu className="menu-color" onClick={onClick} mode="horizontal" items={items}/>
         </div>
     );
 }
