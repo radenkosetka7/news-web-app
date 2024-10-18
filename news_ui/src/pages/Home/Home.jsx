@@ -16,6 +16,7 @@ const Home = () => {
     const news = useSelector((state) => state.news.allNews);
     const newsStatus = useSelector((state) => state.news.status);
     const dispatch = useDispatch();
+    const categories = [...new Set(news[2]?.Kategorije.map(item => item.roditeljNaziv))];
 
     useEffect(() => {
         if (newsStatus === 'idle') {
@@ -50,14 +51,13 @@ const Home = () => {
         </Row>
             <Row justify="center">
                 <Col span={20}>
-                    <NewsListSection title="Novosti" newsItems={news[2]?.Kategorije.filter(item => item.roditeljNaziv === "Novosti")} />
-                    <NewsListSection title="Sport" newsItems={news[2]?.Kategorije.filter(item => item.roditeljNaziv === "Sport")} />
-                    <NewsListSection title="Ekonomija" newsItems={news[2]?.Kategorije.filter(item => item.roditeljNaziv === "Ekonomija")} />
-                    <NewsListSection title="Kultura" newsItems={news[2]?.Kategorije.filter(item => item.roditeljNaziv === "Kultura ")} />
-                    <NewsListSection title="Život i stil" newsItems={news[2]?.Kategorije.filter(item => item.roditeljNaziv === "Život i stil")} />
-                    <NewsListSection title="Magazin" newsItems={news[2]?.Kategorije.filter(item => item.roditeljNaziv === "Magazin")} />
-                    <NewsListSection title="Auto-moto" newsItems={news[2]?.Kategorije.filter(item => item.roditeljNaziv === "Auto-moto")} />
-                    <NewsListSection title="Nauka i tehnologija" newsItems={news[2]?.Kategorije.filter(item => item.roditeljNaziv === "Nauka i tehnologija")} />
+                    {categories.map(category => (
+                        <NewsListSection
+                            key={category}
+                            title={category}
+                            newsItems={news[2]?.Kategorije.filter(item => item.roditeljNaziv === category)}
+                        />
+                    ))}
                 </Col>
             </Row>
             </>
