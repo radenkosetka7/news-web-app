@@ -6,7 +6,7 @@ const MainNewsSection = ({Naslov,show, Datum, Slika,meniNaziv}) => {
 
     return (
         <Row className="main-news" justify="center">
-            <Col span={21}>
+            <Col span={24}>
                 <Card
                     hoverable
                     cover={<img alt={Naslov} src={Slika}/>}

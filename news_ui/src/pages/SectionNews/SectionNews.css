@@ -1,0 +1,7 @@
+.breadcrumb .ant-breadcrumb-link{
+    font-size: large;
+    font-weight: bold;
+}
+.breadcrumb .ant-breadcrumb-link a{
+    color: black;
+}
