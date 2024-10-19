@@ -17,6 +17,7 @@ const refreshAccessToken = async () => {
 const baseService = {
     service: (useAuth) => {
         const instance = axios;
+        instance.defaults.baseURL = "/";
         instance.defaults.headers.common["Content-Type"] = "application/json";
         instance.defaults.headers.common["Accept"] = "application/json";
         if (useAuth) {

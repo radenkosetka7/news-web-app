@@ -38,19 +38,19 @@ const Home = () => {
                     </Content>
 
             </Col>
-            <Col span={6}> <Content className={`sub main-content`}>
+            <Col span={5}> <Content className={`sub main-content`}>
                 {news.length > 0 &&
                     news[1]?.TopVijesti?.slice(0,3).map((item, index) => (
                         <MainNewsSection key={index} show={false} {...item}/>
                     ))
                 }
             </Content></Col>
-            <Col span={6}>  <Sider width={300} className="sider-color">
+            <Col span={8}>
                 <SideNewsSection news={news[1]?.TopVijesti.slice(3,news[1]?.TopVijesti.length)}/>
-            </Sider></Col>
+           </Col>
         </Row>
             <Row justify="center">
-                <Col span={20}>
+                <Col span={21}>
                     {categories.map(category => (
                         <NewsListSection
                             key={category}

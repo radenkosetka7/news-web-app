@@ -12,7 +12,7 @@ const MainNewsSection = ({Naslov,show, Datum, Slika,meniNaziv,vijestID,meniRodit
     return (
         <Row className="main-news" justify="center">
             <Col span={24}>
-                <Link to={`/${foramattedMeniNaziv}/${formmattedMenuNaziv}/${foramattedNaslov}/${vijestID}`}>
+                <Link to={`/${formmattedMenuNaziv}/${foramattedMeniNaziv}/${foramattedNaslov}/${vijestID}`}>
                 <Card
                     hoverable
                     cover={<img alt={Naslov} src={Slika}/>}

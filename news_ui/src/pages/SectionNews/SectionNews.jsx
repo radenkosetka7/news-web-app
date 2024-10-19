@@ -1,4 +1,4 @@
-import {NavLink, useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Breadcrumb, Col, Row} from "antd";
 import React, {useEffect} from "react";
@@ -11,6 +11,7 @@ import './SectionNews.css'
 
 const SectionNews = () => {
     const location = useLocation();
+    //debugger
     const {meniId} = location.state || {};
     const sectionNews = useSelector((state) => state.news.sectionNews);
     const dispatch = useDispatch();
@@ -20,51 +21,73 @@ const SectionNews = () => {
     const leftNews = sectionNews.slice(2, 5);
     const rightNews = sectionNews.slice(5, 8);
     const groupedNews = sectionNews.slice(8, sectionNews.length);
-
+    const navigate = useNavigate();
     useEffect(() => {
+
         if (!menuItem) {
             dispatch(getMenu());
         }
         if (menuItem != null) {
-            dispatch(getAllSectionNews({id: menuItem?.meniID, page: 1, size: 100}));
+            dispatch(getAllSectionNews({id: menuItem?.meniID, page: 1, size: 1000}));
         }
     }, [menuItem]);
+    const handleNavigate = (path, state) => {
+        navigate(path, {state});
+    };
     return (
         <>
             <Row justify="center">
-                <Breadcrumb className="breadcrumb"
-                    items={[
-                        {
-                            title: <NavLink to="/">Naslovna</NavLink>,
-                        },
-                        {
-                            title: <NavLink reloadDocument
-                                            to={`/${menuItem?.Naziv.trim().toLowerCase()}`}>{menuItem?.Naziv}</NavLink>
-                        },
-                        ...(menuItem?.Kategorije?.map((category, index) => {
-                            const formattedNaziv = menuItem?.Naziv.trim().toLowerCase().replace(/ /g, '-');
-                            const formattedCategoryNaziv = category.Naziv.trim().toLowerCase().replace(/ /g, '-');
-                            return {
-                                title: (
-                                    <NavLink key={category.Id || index}
-                                             to={`/${formattedNaziv}/${formattedCategoryNaziv}`}>
+                <Col span={20}>
+                    <Breadcrumb className="breadcrumb"
+                                items={[
+                                    {
+                                        title: (
+                                            <span
+                                                onClick={() => handleNavigate('/', {})}>Naslovna
+                                            </span>
+                                        ),
+                                    },
+                                    {
+                                        title: (
+                                            <span
+                                                onClick={() => {
+                                                    handleNavigate(`/${menuItem?.Naziv.trim().toLowerCase()}`, {meniId: menuItem?.meniID});
+                                                    window.location.assign(`/${menuItem?.Naziv.trim().toLowerCase()}`);
+                                                }}
+                                            >{menuItem?.Naziv}
+                                            </span>
+                                        ),
+                                    },
+                                    ...(menuItem?.Kategorije?.map((category, index) => {
+                                        const formattedNaziv = menuItem?.Naziv.trim().toLowerCase().replace(/ /g, '-');
+                                        const formattedCategoryNaziv = category.Naziv.trim().toLowerCase().replace(/ /g, '-');
+                                        return {
+                                            title: (
+                                                <span
+                                                    key={category.Id || index}
+                                                    onClick={() => handleNavigate(
+                                                        `/${formattedNaziv}/${formattedCategoryNaziv}`,
+                                                        {meniId: menuItem?.meniID, childId: category.meniID}
+                                                    )}>
                                         {category.Naziv}
-                                    </NavLink>
-                                ),
-                            };
-                        }) || []),
-                    ]}
-                />
+                                    </span>
+                                            ),
+                                        };
+                                    }) || []),
+                                ]}
+                    />
+                </Col>
             </Row>
-            <div style={{backgroundColor: menuItem?.Boja, color: "white", fontSize: "20px"}}>
-                <label>{menuItem?.Naziv}</label>
-            </div>
-
+            <Row justify="center" style={{backgroundColor: menuItem?.Boja}}>
+                <Col span={20}>
+                    <label style={{fontSize: 'large', color: "white"}}>{menuItem?.Naziv}</label>
+                </Col>
+            </Row>
             <Row justify="center">
-                <Col span={2}>
+                <Col span={3} style={{paddingTop: '20px'}}>
                     <h4>Glavni naslovi</h4>
                 </Col>
-                <Col span={16}>
+                <Col span={17}>
                     <Row justify="space-between">
                         {topNews.map((item, index) => (
                             <Col span={11} key={index}>
@@ -73,35 +96,37 @@ const SectionNews = () => {
                         ))}
                     </Row>
                     <Row justify="space-between">
-                        <Col span={11}>
+                        {leftNews && <Col span={11}>
                             <SideNewsSection news={leftNews}/>
-                        </Col>
-                        <Col span={11}>
+                        </Col>}
+                        {rightNews &&  <Col span={11}>
                             <SideNewsSection news={rightNews}/>
-                        </Col>
+                        </Col>}
                     </Row>
                 </Col>
             </Row>
             <Row justify="center">
-                <Col span={18}>
+                <Col span={20}>
                     <Row>
-
-                        {categories.map(category => (
-                            <>
+                        {categories.map((category, index) => (
+                            <React.Fragment key={index}>
                                 <hr style={{width: '100%', borderColor: 'gray'}}/>
-                                <Col span={18}>
+                                {groupedNews.filter(item => item.meniNaziv === category).slice(0, 3).length>0 && <Col span={18}>
                                     <NewsListSection
                                         key={category}
                                         title={category}
                                         column={3}
                                         newsItems={groupedNews.filter(item => item.meniNaziv === category).slice(0, 3)}
                                     />
+                                </Col>}
+                                <Col span={6}>
+                                    {groupedNews.filter(item => item.meniNaziv === category).slice(3, 6).length > 0 && (
+                                        <SideNewsSection
+                                            news={groupedNews.filter(item => item.meniNaziv === category).slice(3, 6)}
+                                        />
+                                    )}
                                 </Col>
-
-                                <Col span={6}><SideNewsSection
-                                    news={groupedNews.filter(item => item.meniNaziv === category).slice(3, 6)}/></Col>
-
-                            </>
+                            </React.Fragment>
                         ))}
                     </Row>
                 </Col>
