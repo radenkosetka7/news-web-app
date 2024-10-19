@@ -26,8 +26,9 @@ export const getAllSubsectionNews = createAsyncThunk("news/getAllSubsectionNews"
 });
 
 export const getNewsDetails = createAsyncThunk("news/getNewsDetails", async (id) => {
+    const url = `app/v2/vijesti/${id}`;
     return instance
-        .get(`app/v2/vijesti/${id}`)
+        .get(url)
         .then((results) => results.data);
 });
 
