@@ -25,7 +25,7 @@ const AppMenu = () => {
 
         const childrenItems = item.Kategorije ? item.Kategorije.map((child) => ({
             label: <span className="custom-menu-item">{child.Naziv}</span>,
-            key: `${item.Naziv}-${child.roditeljID}-${child.meniID}-${child.Naziv}`,
+            key: `${item.Naziv}#${child.roditeljID}#${child.meniID}#${child.Naziv}`,
         })) : [];
 
         if (childrenItems.length > 0) {
@@ -35,7 +35,7 @@ const AppMenu = () => {
                 children: [
                     {
                         label: item.Naziv,
-                        key: `${item.meniID}-${item.Naziv}`,
+                        key: `${item.meniID}#${item.Naziv}`,
                     },
                     ...childrenItems,
                 ],
@@ -44,7 +44,7 @@ const AppMenu = () => {
 
     });
     const onClick = (e) => {
-        const parts = e.key.split('-');
+        const parts = e.key.split('#');
         if (parts.length === 2) {
             const [meniId, Naziv] = parts;
             const foramattedNaziv = Naziv.trim().toLowerCase().replace(/ /g, '-');
