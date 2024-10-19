@@ -6,6 +6,8 @@ import Home from "./pages/Home/Home";
 import Footer from "./components/Footer/Footer";
 import SectionNews from "./pages/SectionNews/SectionNews";
 import SubsectionNews from "./pages/SubsectionNews/SubsectionNews";
+import NewsDetails from "./pages/NewsDetails/NewsDetails";
+import {Statistic} from "antd";
 
 
 function App() {
@@ -17,7 +19,8 @@ function App() {
                 <Route path="*" element={<NotFound />} />
                 <Route path="/:section" element={<SectionNews />} />
                 <Route path="/:section/:subsection" element={<SubsectionNews />} />
-
+                <Route path="/:section/:subsection/:title/:id" element={<NewsDetails/>} />
+                <Route path="/statistic" element={<Statistic />} />
             </Routes>
             <Footer />
         </BrowserRouter>

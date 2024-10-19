@@ -17,4 +17,6 @@ public interface ICommentService {
     Page<CommentResponse> getByParentCommentId(Integer id, Pageable pageable);
 
     List<TopNewsResponse> findTop10MostCommentedNews();
+
+    Long getNewsCommentsCount(Integer id);
 }

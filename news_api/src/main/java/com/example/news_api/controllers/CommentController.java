@@ -46,4 +46,10 @@ public class CommentController {
     {
         return commentService.findTop10MostCommentedNews();
     }
+
+    @GetMapping("/count/{id}")
+    public Long getNewsCommentsCount(@PathVariable Integer id)
+    {
+        return commentService.getNewsCommentsCount(id);
+    }
 }

@@ -59,5 +59,10 @@ public class CommentService implements ICommentService {
         return topCommentRepository.findAll().stream().map(topComment -> modelMapper.map(topComment, TopNewsResponse.class)).collect(Collectors.toList());
     }
 
+    @Override
+    public Long getNewsCommentsCount(Integer id) {
+        return commentRepository.getNewsCommentsCount(id);
+    }
+
 
 }

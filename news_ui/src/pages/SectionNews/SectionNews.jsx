@@ -13,7 +13,6 @@ const SectionNews = () => {
     const location = useLocation();
     const {meniId} = location.state || {};
     const sectionNews = useSelector((state) => state.news.sectionNews);
-    const sectionStatus = useSelector((state) => state.news.sectionStatus);
     const dispatch = useDispatch();
     const menuItem = useSelector((state) => state.menu.items).find(item => item.meniID === meniId);
     const categories = [...new Set(menuItem?.Kategorije.map(item => item.Naziv))];
@@ -26,7 +25,7 @@ const SectionNews = () => {
         if (!menuItem) {
             dispatch(getMenu());
         }
-        if (sectionStatus === 'idle' && menuItem != null) {
+        if (menuItem != null) {
             dispatch(getAllSectionNews({id: menuItem?.meniID, page: 1, size: 100}));
         }
     }, [menuItem]);

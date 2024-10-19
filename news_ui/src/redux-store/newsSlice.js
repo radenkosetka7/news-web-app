@@ -4,20 +4,24 @@ import base from "../services/base.service";
 const instance = base.service();
 
 export const getAllNews = createAsyncThunk("news/getAllNews", async () => {
+    const url = 'app/v2/naslovna';
     return instance
-        .get('app/v2/naslovna')
+        .get(url)
         .then((results) => results.data);
 });
 
 export const getAllSectionNews = createAsyncThunk("news/getAllSectionNews", async ({id, page, size}) => {
+    const url = `app/rubrika/${id}/${page}/${size}`;
     return instance
-        .get(`app/rubrika/${id}/${page}/${size}`)
+        .get(url)
         .then((results) => results.data);
 });
 
 export const getAllSubsectionNews = createAsyncThunk("news/getAllSubsectionNews", async ({id, page, size}) => {
+    const url = `/app/podrubrika/${id}/${page}/${size}`;
+
     return instance
-        .get(`app/podrubrika/${id}/${page}/${size}`)
+        .get(url)
         .then((results) => results.data);
 });
 
