@@ -1,6 +1,5 @@
 package com.example.news_api.services.impl;
 
-import com.example.news_api.exceptions.UnauthorizedException;
 import com.example.news_api.services.ITokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -40,18 +39,14 @@ public class TokenService implements ITokenService {
     }
 
     private Claims extractClaims(String token) {
-        try {
-            return Jwts
-                    .parserBuilder()
-                    .setSigningKey(getSigningKey())
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-        }
-        catch (Exception e) {
-            throw new UnauthorizedException("Token is invalid or expired");
-        }
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
+
 
     @Override
     public String buildToken(String expirationTime) {
@@ -77,7 +72,16 @@ public class TokenService implements ITokenService {
 
     @Override
     public boolean isTokenValid(String token) {
-        extractClaims(token);
+        if("undefined".equals(token))
+        {
+            return false;
+        }
+        try {
+            extractClaims(token);
+        }
+        catch (Exception e) {
+            return false;
+        }
         return !isTokenExpired(token);
     }
 
@@ -89,6 +93,7 @@ public class TokenService implements ITokenService {
     private Date extractExiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
+
     private boolean isTokenExpired(String token) {
         return extractExiration(token).before(new Date());
     }

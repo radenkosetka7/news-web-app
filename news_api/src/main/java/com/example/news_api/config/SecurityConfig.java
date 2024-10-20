@@ -1,5 +1,6 @@
 package com.example.news_api.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,12 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http.exceptionHandling(exh->exh.authenticationEntryPoint(
+                (request, response, ex) -> {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
+                }
+        ));
 
         return http.build();
     }

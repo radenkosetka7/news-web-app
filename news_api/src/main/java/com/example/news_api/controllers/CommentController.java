@@ -33,12 +33,12 @@ public class CommentController {
         return commentService.getByNewsId(id,pageable);
     }
 
-    @GetMapping("/childs/{id}")
-    public Page<CommentResponse> getByParentId(@PathVariable Integer id, @RequestParam(defaultValue = "0") int page,
+    @GetMapping("/childs/{id}/{newsId}")
+    public Page<CommentResponse> getByParentId(@PathVariable Integer id, @PathVariable Integer newsId, @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "20") int size)
     {
         Pageable pageable = PageRequest.of(page, size);
-        return commentService.getByParentCommentId(id,pageable);
+        return commentService.getByParentCommentId(id,newsId,pageable);
     }
 
     @GetMapping("/top-news")
@@ -51,5 +51,11 @@ public class CommentController {
     public Long getNewsCommentsCount(@PathVariable Integer id)
     {
         return commentService.getNewsCommentsCount(id);
+    }
+
+    @GetMapping("/parent/count/{id}")
+    public Long getParentNewsCommentsCount(@PathVariable Integer id)
+    {
+        return commentService.getParentNewsCommentsCount(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.news_api.config;
 
+import com.example.news_api.exceptions.UnauthorizedException;
 import com.example.news_api.services.ITokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -33,13 +34,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         token = authHeader.substring(7);
-        user = tokenService.extractSubject(token);
-        if(user != null && SecurityContextHolder.getContext().getAuthentication() == null)
+
+        if(SecurityContextHolder.getContext().getAuthentication() == null)
         {
             if(tokenService.isTokenValid(token))
             {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        user, null, null);
+                        null, null, null);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
