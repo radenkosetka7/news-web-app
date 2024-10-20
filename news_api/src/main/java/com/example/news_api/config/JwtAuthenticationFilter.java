@@ -1,6 +1,5 @@
 package com.example.news_api.config;
 
-import com.example.news_api.exceptions.UnauthorizedException;
 import com.example.news_api.services.ITokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,22 +22,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final ITokenService tokenService;
 
     @Override
-    protected void doFilterInternal(@NotNull  HttpServletRequest request, @NotNull HttpServletResponse response,
-                                    @NotNull  FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
+                                    @NotNull FilterChain filterChain) throws ServletException, IOException {
 
         final String authHeader = request.getHeader("Authorization");
         final String token;
-        final String user;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
         token = authHeader.substring(7);
 
-        if(SecurityContextHolder.getContext().getAuthentication() == null)
-        {
-            if(tokenService.isTokenValid(token))
-            {
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (tokenService.isTokenValid(token)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         null, null, null);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
