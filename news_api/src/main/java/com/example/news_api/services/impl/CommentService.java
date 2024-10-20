@@ -42,15 +42,15 @@ public class CommentService implements ICommentService {
 
 
     @Override
-    public Page<CommentResponse> getByNewsId(Integer id,Pageable pageable) {
-        return commentRepository.findByNewsIdAndParentCommentIsNull(id,pageable)
-                .map(comment-> modelMapper.map(comment, CommentResponse.class));
+    public Page<CommentResponse> getByNewsId(Integer id, Pageable pageable) {
+        return commentRepository.findByNewsIdAndParentCommentIsNull(id, pageable)
+                .map(comment -> modelMapper.map(comment, CommentResponse.class));
     }
 
     @Override
-    public Page<CommentResponse> getByParentCommentId(Integer id, Pageable pageable) {
-       return commentRepository.findByParentCommentId(id,pageable)
-               .map(comment-> modelMapper.map(comment, CommentResponse.class));
+    public Page<CommentResponse> getByParentCommentId(Integer id,Integer newsId, Pageable pageable) {
+        return commentRepository.findByParentCommentIdAndNewsId(id,newsId, pageable)
+                .map(comment -> modelMapper.map(comment, CommentResponse.class));
     }
 
 
@@ -62,6 +62,11 @@ public class CommentService implements ICommentService {
     @Override
     public Long getNewsCommentsCount(Integer id) {
         return commentRepository.getNewsCommentsCount(id);
+    }
+
+    @Override
+    public Long getParentNewsCommentsCount(Integer id) {
+        return commentRepository.getParentNewsCommentsCount(id);
     }
 
 

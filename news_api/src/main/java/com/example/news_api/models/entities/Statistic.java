@@ -38,7 +38,7 @@ public class Statistic {
     @Column(name = "subsection_name", nullable = false, length = 45)
     private String subsectionName;
 
-    @Column(name = "news_title", length = 45)
+    @Column(name = "news_title", length = 255)
     private String newsTitle;
 
 }

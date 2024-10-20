@@ -1,33 +1,31 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import base from "../services/base.service";
+import axios from "axios";
 
-const instance = base.service();
 
 export const getAllNews = createAsyncThunk("news/getAllNews", async () => {
     const url = 'app/v2/naslovna';
-    return instance
+    return axios
         .get(url)
         .then((results) => results.data);
 });
 
 export const getAllSectionNews = createAsyncThunk("news/getAllSectionNews", async ({id, page, size}) => {
     const url = `app/rubrika/${id}/${page}/${size}`;
-    return instance
+    return axios
         .get(url)
         .then((results) => results.data);
 });
 
 export const getAllSubsectionNews = createAsyncThunk("news/getAllSubsectionNews", async ({id, page, size}) => {
     const url = `/app/podrubrika/${id}/${page}/${size}`;
-
-    return instance
+    return axios
         .get(url)
         .then((results) => results.data);
 });
 
 export const getNewsDetails = createAsyncThunk("news/getNewsDetails", async (id) => {
     const url = `app/v2/vijesti/${id}`;
-    return instance
+    return axios
         .get(url)
         .then((results) => results.data);
 });
@@ -37,8 +35,9 @@ const newsSlice = createSlice({
     name: "news",
     initialState: {
         allNews: [],
+        currentPage: 0,
         sectionNews: [],
-        subsectionNews:[],
+        subsectionNews: [],
         selectedNews: null,
         selectedNewsStatus: 'idle',
         sectionStatus: 'idle',
@@ -46,7 +45,11 @@ const newsSlice = createSlice({
         error: null,
         status: 'idle',
     },
-    reducers: {},
+    reducers: {
+        setCurrentPage: (state, action) => {
+            state.currentPage = action.payload;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getAllNews.pending, (state) => {
@@ -96,5 +99,7 @@ const newsSlice = createSlice({
     },
 
 });
+
+export const {setCurrentPage} = newsSlice.actions;
 
 export default newsSlice.reducer;

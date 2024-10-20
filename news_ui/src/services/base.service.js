@@ -1,67 +1,88 @@
 import axios from "axios";
 
 
-const refreshAccessToken = async () => {
-    const refreshToken = sessionStorage.getItem("refreshToken");
-    try {
-        const response = await axios.post('http://127.0.0.1:9001/api/v1/auth/token/refresh', {
-            Authorization: refreshToken,
-        });
-        const newAccessToken = response.data.accessToken;
-        localStorage.setItem("accessToken", newAccessToken);
-        return newAccessToken;
-    } catch (error) {
-        throw error;
+const baseService = axios.create({
+    baseURL: "/",
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
     }
-};
-const baseService = {
-    service: (useAuth) => {
-        const instance = axios;
-        instance.defaults.baseURL = "/";
-        instance.defaults.headers.common["Content-Type"] = "application/json";
-        instance.defaults.headers.common["Accept"] = "application/json";
-        if (useAuth) {
-            instance.interceptors.request.use(
-                async (config) => {
-                    const token = sessionStorage.getItem("access");
-                    if (token) {
-                        config.headers = {
-                            ...config.headers,
-                            Authorization: `Bearer ${token}`
-                        };
-                    }
-                    return config;
-                },
-                (error) => {
-                    return Promise.reject(error);
-                }
-            );
+});
 
-            instance.interceptors.response.use(
-                (response) => {
-                    return response;
-                },
-                async (error) => {
-                    const originalRequest = error.config;
+function base64UrlDecode(str) {
+    str = str.replace(/-/g, '+').replace(/_/g, '/');
 
-                    if (error.response.status === 401 && !originalRequest._retry) {
-                        originalRequest._retry = true;
+    switch (str.length % 4) {
+        case 2:
+            str += '==';
+            break;
+        case 3:
+            str += '=';
+            break;
+    }
 
-                        try {
-                            const newAccessToken = await refreshAccessToken();
-                            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+    return atob(str);
+}
 
-                            return instance(originalRequest);
-                        } catch (refreshError) {
-                            return Promise.reject(refreshError);
-                        }
-                    }
+function decodeJwt(token) {
+    const parts = token.split('.');
 
-                    return Promise.reject(error);
-                }
-            );
+    if (parts.length !== 3) {
+        throw new Error('Invalid JWT token');
+    }
+
+    const payload = base64UrlDecode(parts[1]);
+
+    return JSON.parse(payload);
+}
+
+const interceptor = store => {
+    baseService.interceptors.request.use(
+        request => {
+            let token = localStorage.getItem("accessToken");
+
+            const decodeToken = decodeJwt(token);
+            if (decodeToken.exp < Date.now() / 1000) {
+                getNewToken();
+            }
+            request.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}`;
+            return request;
+        },
+        error => {
+            return Promise.reject(error);
         }
-        return instance;
+    );
+
+    baseService.interceptors.response.use(
+        response => {
+            return response;
+        },
+
+        async error => {
+            if (error && error.response.status === 401) {
+                await getNewToken();
+
+                const token = localStorage.getItem("accessToken");
+                error.config.headers.Authorization = `Bearer ${token}`;
+                return baseService(error.config);
+            }
+            return Promise.reject(error);
+        }
+    );
+}
+
+const getNewToken = async () => {
+    try {
+        const request = {
+            refreshToken: localStorage.getItem("refreshToken")
+        };
+        const response = await axios.post('http://127.0.0.1:9001/api/v1/auth/token/refresh', request)
+
+        localStorage.setItem("accessToken", response.data.accessToken);
+    } catch (e) {
+        console.log("Error", e);
     }
 };
+
 export default baseService;
+export {interceptor};

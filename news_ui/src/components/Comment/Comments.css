@@ -1,0 +1,7 @@
+.comment-list .ant-comment .ant-comment-actions{
+    display: flex;
+    justify-content: end;
+}
+.comment-list .ant-comment .ant-comment-actions button:first-child {
+    margin-right: 10px;
+}

@@ -1,17 +1,14 @@
-
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import base from "../services/base.service";
 import {getAllNews} from "./newsSlice";
+import axios from "axios";
 
-const instance = base.service();
 
 export const getTokens = createAsyncThunk("auth/getTokens", async () => {
-    const response= await instance.get('http://127.0.0.1:9001/api/v1/auth/token');
-    const {accessToken,refreshToken} = response.data;
+    const response = await axios.get('http://127.0.0.1:9001/api/v1/auth/token');
+    const {accessToken, refreshToken} = response.data;
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
 });
-
 
 
 const authSlice = createSlice({
@@ -29,7 +26,7 @@ const authSlice = createSlice({
             })
             .addCase(getAllNews.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.allNews = true
+                state.authenticated = true
             })
             .addCase(getAllNews.rejected, (state, action) => {
                 state.status = 'failed';

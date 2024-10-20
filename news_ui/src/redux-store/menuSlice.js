@@ -1,9 +1,9 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import base from "../services/base.service";
-const instance = base.service();
+import axios from "axios";
+
 export const getMenu = createAsyncThunk("menu/getMenu", async () => {
     const url = 'app/meni';
-    return instance
+    return axios
         .get(url)
         .then((results) => results.data);
 });
