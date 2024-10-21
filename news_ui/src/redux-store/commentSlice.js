@@ -3,7 +3,12 @@ import baseService from "../services/base.service";
 import {API_URL} from "../util/helpers";
 
 
-export const getAllNewsComments = createAsyncThunk("comments/getAllNewsComments", async ({id, page, size}) => {
+export const getAllNewsComments = createAsyncThunk("comments/getAllNewsComments", async ({
+                                                                                             id,
+                                                                                             page,
+                                                                                             size,
+                                                                                             loadMore
+                                                                                         }) => {
     return baseService
         .get(API_URL + `api/v1/comments/${id}`, {
             params: {
@@ -52,13 +57,16 @@ const commentSlice = createSlice({
         repliesCount: 0,
         status: 'idle',
         error: null,
-
+        commentsPagination: {
+            last: false,
+            page: 0,
+        }
     },
     reducers: {
         removeCommentReplies: (state, action) => {
             const {id} = action.payload;
             delete state.commentReplies[id];
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -67,7 +75,17 @@ const commentSlice = createSlice({
             })
             .addCase(getAllNewsComments.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.newsComments = action.payload.content
+                let loadMore = action.meta.arg.loadMore;
+                if (loadMore) {
+                    state.newsComments = [
+                        ...state.newsComments,
+                        ...action.payload.content
+                    ]
+                } else {
+                    state.newsComments = action.payload.content;
+                }
+                state.commentsPagination.page += 1;
+                state.commentsPagination.last = action.payload.last;
             })
             .addCase(getAllNewsComments.rejected, (state, action) => {
                 state.status = 'failed';
@@ -122,7 +140,6 @@ const commentSlice = createSlice({
             })
             .addCase(addComment.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                // state.newsComments.push(action.payload);
 
             })
             .addCase(addComment.rejected, (state, action) => {

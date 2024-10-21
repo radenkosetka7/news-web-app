@@ -6,3 +6,7 @@
 .comment-list .ant-comment .ant-comment-actions button:first-child {
     margin-right: 10px;
 }
+
+.comment-row-flex {
+    flex-direction: column;
+}

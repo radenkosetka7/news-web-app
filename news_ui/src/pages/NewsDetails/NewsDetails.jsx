@@ -8,11 +8,11 @@ import {useNavigate, useParams} from "react-router-dom";
 import SideNewsSection from "../../components/SideNewsSection/SideNewsSection";
 import Sider from "antd/es/layout/Sider";
 import Comments from "../../components/Comment/Comments";
-import {getAllNewsComments} from "../../redux-store/commentSlice";
-import axios from "axios";
-import {addStatistic} from "../../redux-store/statisticSlice";
+import {getAllNewsComments, getNewsCommentsCount} from "../../redux-store/commentSlice";
 import {formatString, getBrowserName, getOsName} from "../../util/helpers";
 import './NewsDetails.css'
+import {addStatistic} from "../../redux-store/statisticSlice";
+import axios from "axios";
 
 const NewsDetails = () => {
 
@@ -29,8 +29,9 @@ const NewsDetails = () => {
     }, [id]);
 
     useEffect(() => {
-        dispatch(getAllNewsComments({id: id, page: 0, size: 10}));
-    }, []);
+        dispatch(getAllNewsComments({id: id, page: 0, size: 10, loadMore: false}));
+        dispatch(getNewsCommentsCount(id));
+    }, [id]);
 
 
     useEffect(() => {
