@@ -6,7 +6,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
@@ -27,7 +26,7 @@ public class Comment {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "created_at",nullable = false)
+    @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)

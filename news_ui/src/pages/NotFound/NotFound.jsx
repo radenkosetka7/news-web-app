@@ -1,5 +1,5 @@
 import "./NotFound.css";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import SnowError from "../../assets/snoweror.jpg";
 import Page from "../../assets/page.jpg";

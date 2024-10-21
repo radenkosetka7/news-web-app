@@ -5,7 +5,7 @@ import {API_URL} from "../util/helpers";
 
 export const getAllNewsComments = createAsyncThunk("comments/getAllNewsComments", async ({id, page, size}) => {
     return baseService
-        .get(API_URL+`api/v1/comments/${id}`, {
+        .get(API_URL + `api/v1/comments/${id}`, {
             params: {
                 page: page,
                 size: size
@@ -39,7 +39,7 @@ export const getCommentRepliesCount = createAsyncThunk("comments/getCommentRepli
 
 export const addComment = createAsyncThunk("comments/postComment", async (data) => {
     return baseService
-        .post(API_URL+ `api/v1/comments`, data)
+        .post(API_URL + `api/v1/comments`, data)
         .then((results) => results.data);
 });
 

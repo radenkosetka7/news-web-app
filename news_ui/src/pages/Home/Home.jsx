@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
-import {Layout} from 'antd';
+import {Col, Layout, Row} from 'antd';
 import MainNewsSection from '../../components/MainNewsSection/MainNewsSection';
 import SideNewsSection from '../../components/SideNewsSection/SideNewsSection';
 import {useDispatch, useSelector} from "react-redux";
 import {getAllNews} from "../../redux-store/newsSlice";
-import { Col, Row } from 'antd';
 import NewsListSection from "../../components/NewsListSection/NewsListSection";
 import './Home.css';
 import {getTokens} from "../../redux-store/authSlice";
+
 const {Content, Sider} = Layout;
 
 
@@ -27,8 +27,8 @@ const Home = () => {
 
     return (
         <>
-        <Row justify="center">
-            <Col span={8}>
+            <Row justify="center">
+                <Col span={8}>
                     <Content className={`main main-content`}>
                         {news.length > 0 &&
                             news[0]?.Glavna.map((item, index) => (
@@ -37,18 +37,18 @@ const Home = () => {
                         }
                     </Content>
 
-            </Col>
-            <Col span={5}> <Content className={`sub main-content`}>
-                {news.length > 0 &&
-                    news[1]?.TopVijesti?.slice(0,3).map((item, index) => (
-                        <MainNewsSection key={index} show={false} {...item}/>
-                    ))
-                }
-            </Content></Col>
-            <Col span={8}>
-                <SideNewsSection news={news[1]?.TopVijesti.slice(3,news[1]?.TopVijesti.length)}/>
-           </Col>
-        </Row>
+                </Col>
+                <Col span={5}> <Content className={`sub main-content`}>
+                    {news.length > 0 &&
+                        news[1]?.TopVijesti?.slice(0, 3).map((item, index) => (
+                            <MainNewsSection key={index} show={false} {...item}/>
+                        ))
+                    }
+                </Content></Col>
+                <Col span={8}>
+                    <SideNewsSection news={news[1]?.TopVijesti.slice(3, news[1]?.TopVijesti.length)}/>
+                </Col>
+            </Row>
             <Row justify="center">
                 <Col span={21}>
                     {categories.map(category => (
@@ -60,7 +60,7 @@ const Home = () => {
                     ))}
                 </Col>
             </Row>
-            </>
+        </>
 
     );
 }

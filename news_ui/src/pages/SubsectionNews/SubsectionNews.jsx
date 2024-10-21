@@ -6,8 +6,8 @@ import {Breadcrumb, Col, List, Row} from "antd";
 import {getMenu} from "../../redux-store/menuSlice";
 import axios from "axios";
 import {addStatistic} from "../../redux-store/statisticSlice";
-import {formatString} from "../../util/helpers";
-import {getBrowserName, getOsName} from "../../util/helpers";
+import {formatString, getBrowserName, getOsName} from "../../util/helpers";
+import './SubsectionNews.css'
 
 const SubsectionNews = () => {
 
@@ -85,7 +85,7 @@ const SubsectionNews = () => {
                             ]}
                 />
             </Row>
-            <hr style={{width: '100%', borderColor: 'gray'}}/>
+            <hr className="hr-sub"/>
             <Row justify="center">
                 <Col span={16}>
                     <List

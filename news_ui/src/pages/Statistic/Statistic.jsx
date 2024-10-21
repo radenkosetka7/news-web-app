@@ -32,7 +32,7 @@ const Statistic = () => {
             </Row>
             <Row justify={"center"}>
                 <Col span={8}>
-                    <PieChart data={stasticData} />
+                    <PieChart data={stasticData}/>
                 </Col>
                 <Col span={3} style={{paddingTop: '20px'}}>
                     <h4>Najpopularnije vijesti</h4>

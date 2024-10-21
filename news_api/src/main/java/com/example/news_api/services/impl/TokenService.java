@@ -72,14 +72,12 @@ public class TokenService implements ITokenService {
 
     @Override
     public boolean isTokenValid(String token) {
-        if("undefined".equals(token))
-        {
+        if ("undefined".equals(token)) {
             return false;
         }
         try {
             extractClaims(token);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
         return !isTokenExpired(token);

@@ -1,7 +1,14 @@
-/*.breadcrumb .ant-breadcrumb-link{*/
-/*    font-size: medium;*/
-/*    font-weight: bold;*/
-/*}*/
-/*.breadcrumb .ant-breadcrumb-link a{*/
-/*    color: black;*/
-/*}*/
+
+.label-section {
+    font-size: large;
+    color: white;
+}
+
+.hr-section {
+    width: 100%;
+    border-color: gray;
+}
+
+.title-head {
+    padding: 20px;
+}

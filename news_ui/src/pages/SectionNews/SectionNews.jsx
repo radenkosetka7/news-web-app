@@ -80,11 +80,11 @@ const SectionNews = () => {
             </Row>
             <Row justify="center" style={{backgroundColor: menuItem?.Boja}}>
                 <Col span={20}>
-                    <label style={{fontSize: 'large', color: "white"}}>{menuItem?.Naziv}</label>
+                    <label className="label-section">{menuItem?.Naziv}</label>
                 </Col>
             </Row>
             <Row justify="center">
-                <Col span={3} style={{paddingTop: '20px'}}>
+                <Col span={3} className="title-head">
                     <h4>Glavni naslovi</h4>
                 </Col>
                 <Col span={17}>
@@ -99,7 +99,7 @@ const SectionNews = () => {
                         {leftNews && <Col span={11}>
                             <SideNewsSection news={leftNews}/>
                         </Col>}
-                        {rightNews &&  <Col span={11}>
+                        {rightNews && <Col span={11}>
                             <SideNewsSection news={rightNews}/>
                         </Col>}
                     </Row>
@@ -108,29 +108,36 @@ const SectionNews = () => {
             <Row justify="center">
                 <Col span={20}>
                     <Row>
-                        {categories.map((category, index) => (
-                            <React.Fragment key={index}>
-                                <hr style={{width: '100%', borderColor: 'gray'}}/>
-                                {groupedNews.filter(item => item.meniNaziv === category).slice(0, 3).length>0 && <Col span={18}>
-                                    <NewsListSection
-                                        key={category}
-                                        title={category}
-                                        column={3}
-                                        newsItems={groupedNews.filter(item => item.meniNaziv === category).slice(0, 3)}
-                                    />
-                                </Col>}
-                                <Col span={6}>
-                                    {groupedNews.filter(item => item.meniNaziv === category).slice(3, 6).length > 0 && (
-                                        <SideNewsSection
-                                            news={groupedNews.filter(item => item.meniNaziv === category).slice(3, 6)}
-                                        />
+                        {categories.map((category, index) => {
+                            const hasNewsForCategory = groupedNews.filter(item => item.meniNaziv === category).length > 0;
+
+                            return hasNewsForCategory && (
+                                <React.Fragment key={index}>
+                                    <hr className="hr-section"/>
+                                    {groupedNews.filter(item => item.meniNaziv === category).slice(0, 3).length > 0 && (
+                                        <Col span={18}>
+                                            <NewsListSection
+                                                key={category}
+                                                title={category}
+                                                column={3}
+                                                newsItems={groupedNews.filter(item => item.meniNaziv === category).slice(0, 3)}
+                                            />
+                                        </Col>
                                     )}
-                                </Col>
-                            </React.Fragment>
-                        ))}
+                                    <Col span={6}>
+                                        {groupedNews.filter(item => item.meniNaziv === category).slice(3, 6).length > 0 && (
+                                            <SideNewsSection
+                                                news={groupedNews.filter(item => item.meniNaziv === category).slice(3, 6)}
+                                            />
+                                        )}
+                                    </Col>
+                                </React.Fragment>
+                            );
+                        })}
                     </Row>
                 </Col>
             </Row>
+
         </>
     );
 }

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Breadcrumb, Card, Col, Layout, Row} from 'antd';
+import {Breadcrumb, Card, Col, Row} from 'antd';
 import 'antd/dist/reset.css';
 import {useDispatch, useSelector} from "react-redux";
 import {getMenu} from "../../redux-store/menuSlice";
@@ -12,6 +12,7 @@ import {getAllNewsComments} from "../../redux-store/commentSlice";
 import axios from "axios";
 import {addStatistic} from "../../redux-store/statisticSlice";
 import {formatString, getBrowserName, getOsName} from "../../util/helpers";
+import './NewsDetails.css'
 
 const NewsDetails = () => {
 
@@ -25,7 +26,7 @@ const NewsDetails = () => {
     useEffect(() => {
 
         getData();
-    }, [selectedNews]);
+    }, [id]);
 
     useEffect(() => {
         dispatch(getAllNewsComments({id: id, page: 0, size: 10}));
@@ -114,7 +115,7 @@ const NewsDetails = () => {
             </Row>
             <Row justify="center" style={{backgroundColor: menuItem?.Boja}}>
                 <Col span={20}>
-                    <label style={{fontSize: 'large', color: "white"}}>{menuItem?.Naziv}</label>
+                    <label className="label-detail">{menuItem?.Naziv}</label>
                 </Col>
             </Row>
             <Row gutter={16} justify={"center"}>
@@ -138,9 +139,9 @@ const NewsDetails = () => {
             </Row>
             <br/>
             <Row gutter={16} justify={"center"}>
-                <Col span={18}><h2>Komentari</h2></Col>
-                <Col span={18}>
-                    <Comments/>
+                <Col span={20}><h2>Komentari</h2></Col>
+                <Col span={20}>
+                    <Comments id={id}/>
                 </Col>
             </Row>
         </>

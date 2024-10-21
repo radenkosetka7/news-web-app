@@ -1,7 +1,6 @@
 package com.example.news_api.services.impl;
 
 import com.example.news_api.models.entities.Statistic;
-import com.example.news_api.models.entities.Statisticlast7day;
 import com.example.news_api.models.requests.StatisticRequest;
 import com.example.news_api.models.responses.StatisticLast7Days;
 import com.example.news_api.models.responses.StatisticResponse;
@@ -36,7 +35,7 @@ public class StatisticService implements IStatisticService {
     @Override
     public List<StatisticLast7Days> findLastWeekStatistics() {
         return statisticLast7DaysRepository.findAll()
-                .stream().map(s->modelMapper.map(s,StatisticLast7Days.class))
+                .stream().map(s -> modelMapper.map(s, StatisticLast7Days.class))
                 .collect(Collectors.toList());
     }
 }

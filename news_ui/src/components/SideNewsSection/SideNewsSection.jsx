@@ -17,7 +17,7 @@ const SideNewsSection = ({news}) => {
                 const foramattedNaslov = formatString(item.Naslov);
                 return (
                     <List.Item>
-                        <Link style={{width: '100%'}}
+                        <Link className="link-side"
                               to={`/${foramattedRoditelj}/${foramattedMeni}/${foramattedNaslov}/${item.vijestID}`}>
                             <List.Item.Meta
                                 avatar={<img className="image-side"
