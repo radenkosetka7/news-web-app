@@ -1,33 +1,39 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import axios from "axios";
-
+import apiService from "../services/api.service";
 
 export const getAllNews = createAsyncThunk("news/getAllNews", async () => {
-    const url = 'app/v2/naslovna';
-    return axios
-        .get(url)
+    return apiService
+        .get('app/v2/naslovna')
         .then((results) => results.data);
 });
 
 export const getAllSectionNews = createAsyncThunk("news/getAllSectionNews", async ({id, page, size}) => {
-    const url = `app/rubrika/${id}/${page}/${size}`;
-    return axios
-        .get(url)
+    return apiService
+        .get(`app/rubrika/${id}/${page}/${size}`)
         .then((results) => results.data);
 });
 
 export const getAllSubsectionNews = createAsyncThunk("news/getAllSubsectionNews", async ({id, page, size}) => {
-    const url = `/app/podrubrika/${id}/${page}/${size}`;
-    return axios
-        .get(url)
+    return apiService
+        .get(`/app/podrubrika/${id}/${page}/${size}`)
         .then((results) => results.data);
 });
 
 export const getNewsDetails = createAsyncThunk("news/getNewsDetails", async (id) => {
-    const url = `app/v2/vijesti/${id}`;
-    return axios
-        .get(url)
+    return apiService
+        .get(`app/v2/vijesti/${id}`)
         .then((results) => results.data);
+});
+
+export const getTop10NewsWithDetails = createAsyncThunk("news/top10", async (top10News) => {
+    const newsDetailsPromises = top10News.map(async (news) => {
+        const newsDetails = await apiService.get(`app/v2/vijesti/${news.newsId}`);
+        return {
+            ...newsDetails.data,
+            totalComments: news.totalComments
+        }
+    });
+    return await Promise.all(newsDetailsPromises);
 });
 
 
@@ -39,6 +45,7 @@ const newsSlice = createSlice({
         sectionNews: [],
         subsectionNews: [],
         selectedNews: null,
+        top10DetailsNews: [],
         selectedNewsStatus: 'idle',
         sectionStatus: 'idle',
         subsectionStatus: 'idle',
@@ -93,6 +100,17 @@ const newsSlice = createSlice({
                 state.selectedNews = action.payload
             })
             .addCase(getNewsDetails.rejected, (state, action) => {
+                state.selectedNewsStatus = 'failed';
+                state.error = action.error.message;
+            })
+            .addCase(getTop10NewsWithDetails.pending, (state) => {
+                state.selectedNewsStatus = 'loading';
+            })
+            .addCase(getTop10NewsWithDetails.fulfilled, (state, action) => {
+                state.selectedNewsStatus = 'succeeded';
+                state.top10DetailsNews = action.payload
+            })
+            .addCase(getTop10NewsWithDetails.rejected, (state, action) => {
                 state.selectedNewsStatus = 'failed';
                 state.error = action.error.message;
             });

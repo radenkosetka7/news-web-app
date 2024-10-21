@@ -1,10 +1,11 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import baseService from "../services/base.service";
+import {API_URL} from "../util/helpers";
+
 
 export const getAllNewsComments = createAsyncThunk("comments/getAllNewsComments", async ({id, page, size}) => {
-    const url = `http://127.0.0.1:9001/api/v1/comments/${id}`;
     return baseService
-        .get(url, {
+        .get(API_URL+`api/v1/comments/${id}`, {
             params: {
                 page: page,
                 size: size
@@ -14,9 +15,8 @@ export const getAllNewsComments = createAsyncThunk("comments/getAllNewsComments"
 });
 
 export const getCommentReplies = createAsyncThunk("comments/getCommnetReplies", async ({id, page, size, newsId}) => {
-    const url = `http://127.0.0.1:9001/api/v1/comments/childs/${id}/${newsId}`;
     return baseService
-        .get(url, {
+        .get(API_URL + `api/v1/comments/childs/${id}/${newsId}`, {
             params: {
                 page: page,
                 size: size
@@ -26,23 +26,20 @@ export const getCommentReplies = createAsyncThunk("comments/getCommnetReplies", 
 });
 
 export const getNewsCommentsCount = createAsyncThunk("comments/getNewsCommentsCount", async (id) => {
-    const url = `http://127.0.0.1:9001/api/v1/comments/count/${id}`;
     return baseService
-        .get(url)
+        .get(API_URL + `api/v1/comments/count/${id}`)
         .then((results) => results.data);
 });
 
 export const getCommentRepliesCount = createAsyncThunk("comments/getCommentRepliesCount", async (id) => {
-    const url = `http://127.0.0.1:9001/api/v1/comments/parent/count/${id}`;
     return baseService
-        .get(url)
+        .get(API_URL + `api/v1/comments/parent/count/${id}`)
         .then((results) => results.data);
 });
 
 export const addComment = createAsyncThunk("comments/postComment", async (data) => {
-    const url = `http://127.0.0.1:9001/api/v1/comments`;
     return baseService
-        .post(url, data)
+        .post(API_URL+ `api/v1/comments`, data)
         .then((results) => results.data);
 });
 

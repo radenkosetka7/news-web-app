@@ -1,10 +1,11 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {getAllNews} from "./newsSlice";
 import axios from "axios";
+import {API_URL} from "../util/helpers";
 
 
 export const getTokens = createAsyncThunk("auth/getTokens", async () => {
-    const response = await axios.get('http://127.0.0.1:9001/api/v1/auth/token');
+    const response = await axios.get(API_URL+'api/v1/auth/token');
     const {accessToken, refreshToken} = response.data;
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
