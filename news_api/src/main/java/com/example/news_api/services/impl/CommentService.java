@@ -48,8 +48,8 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public Page<CommentResponse> getByParentCommentId(Integer id,Integer newsId, Pageable pageable) {
-        return commentRepository.findByParentCommentIdAndNewsId(id,newsId, pageable)
+    public Page<CommentResponse> getByParentCommentId(Integer id, Integer newsId, Pageable pageable) {
+        return commentRepository.findByParentCommentIdAndNewsId(id, newsId, pageable)
                 .map(comment -> modelMapper.map(comment, CommentResponse.class));
     }
 

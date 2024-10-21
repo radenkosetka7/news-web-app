@@ -1,7 +1,10 @@
-
 export const API_URL = process.env.REACT_APP_API_URL;
 export const formatString = (str) => {
-    return str?.trim().toLowerCase().replace(/ /g, '-') || '';
+    return str?.trim().replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/(^-|-$)/g, '')
+        .toLowerCase();
 };
 
 const base64UrlDecode = (str) => {

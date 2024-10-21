@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import {Card, Col, Row} from "antd";
+import React, {useEffect, useState} from 'react';
+import {Pie} from 'react-chartjs-2';
+import {ArcElement, Chart as ChartJS, Legend, Tooltip} from 'chart.js';
+import {Card} from "antd";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = ({ data }) => {
+const PieChart = ({data}) => {
     const [chartsData, setChartsData] = useState({});
 
     useEffect(() => {
@@ -42,12 +42,12 @@ const PieChart = ({ data }) => {
     }, [data]);
 
     return (
-        <div style={{paddingTop:"10px"}}>
+        <div style={{paddingTop: "10px"}}>
             {chartsData.length > 0 && chartsData.map((chart, index) => (
-                <div style={{paddingBottom:"10px"}} key={index}>
-                        <Card title={chart.label}>
-                            <Pie data={chart}/>
-                        </Card>
+                <div style={{paddingBottom: "10px"}} key={index}>
+                    <Card title={chart.label}>
+                        <Pie data={chart}/>
+                    </Card>
                 </div>
             ))}
         </div>

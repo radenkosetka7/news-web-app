@@ -27,35 +27,30 @@ public class CommentController {
 
     @GetMapping("/{id}")
     public Page<CommentResponse> getByNewsId(@PathVariable Integer id, @RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "20") int size)
-    {
+                                             @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return commentService.getByNewsId(id,pageable);
+        return commentService.getByNewsId(id, pageable);
     }
 
     @GetMapping("/childs/{id}/{newsId}")
     public Page<CommentResponse> getByParentId(@PathVariable Integer id, @PathVariable Integer newsId, @RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "20") int size)
-    {
+                                               @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return commentService.getByParentCommentId(id,newsId,pageable);
+        return commentService.getByParentCommentId(id, newsId, pageable);
     }
 
     @GetMapping("/top-news")
-    public List<TopNewsResponse> findTop10MostCommentedNews()
-    {
+    public List<TopNewsResponse> findTop10MostCommentedNews() {
         return commentService.findTop10MostCommentedNews();
     }
 
     @GetMapping("/count/{id}")
-    public Long getNewsCommentsCount(@PathVariable Integer id)
-    {
+    public Long getNewsCommentsCount(@PathVariable Integer id) {
         return commentService.getNewsCommentsCount(id);
     }
 
     @GetMapping("/parent/count/{id}")
-    public Long getParentNewsCommentsCount(@PathVariable Integer id)
-    {
+    public Long getParentNewsCommentsCount(@PathVariable Integer id) {
         return commentService.getParentNewsCommentsCount(id);
     }
 }
