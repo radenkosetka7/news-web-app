@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Immutable;
@@ -14,19 +13,24 @@ import org.hibernate.annotations.Immutable;
 /**
  * Mapping for DB view
  */
-@Data
+@Getter
+@Setter
 @Entity
 @Immutable
 @Table(name = "statisticlast7days")
 public class Statisticlast7day {
     @Id
-    @Size(max = 15)
     @NotNull
-    @Column(name = "attribute", nullable = false, length = 15)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Size(max = 26)
+    @NotNull
+    @Column(name = "attribute", nullable = false, length = 26)
     private String attribute;
 
-    @Size(max = 45)
-    @Column(name = "value", length = 45)
+    @Size(max = 255)
+    @Column(name = "value")
     private String value;
 
     @NotNull

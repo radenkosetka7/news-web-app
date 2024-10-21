@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import { Menu } from 'antd';
+import React, {useEffect} from 'react';
+import {Menu} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {getMenu} from "../../redux-store/menuSlice";
 import Logo from "../../assets/logo.png";
+import {formatString} from "../../util/helpers";
 
 import './Menu.css'
 import {Link, useNavigate} from "react-router-dom";
@@ -47,15 +48,13 @@ const AppMenu = () => {
         const parts = e.key.split('#');
         if (parts.length === 2) {
             const [meniId, Naziv] = parts;
-            const foramattedNaziv = Naziv.trim().toLowerCase().replace(/ /g, '-');
-            navigate(`/${foramattedNaziv}`, { state: { meniId }});
-        }
-        else
-        {
-            const [Naziv,meniId,childId,ChildNaziv] = parts;
-            const foramattedNaziv = Naziv.trim().toLowerCase().replace(/ /g, '-');
-            const foramattedNazivChild = ChildNaziv.trim().toLowerCase().replace(/ /g, '-');
-            navigate(`/${foramattedNaziv}/${foramattedNazivChild}`, { state: { childId, meniId }});
+            const foramattedNaziv = formatString(Naziv);
+            navigate(`/${foramattedNaziv}`, {state: {meniId}});
+        } else {
+            const [Naziv, meniId, childId, ChildNaziv] = parts;
+            const foramattedNaziv = formatString(Naziv);
+            const foramattedNazivChild = formatString(ChildNaziv);
+            navigate(`/${foramattedNaziv}/${foramattedNazivChild}`, {state: {childId, meniId}});
         }
 
     };
@@ -65,7 +64,7 @@ const AppMenu = () => {
                 <Link to="/">
                     <img className="app-logo" src={Logo} alt="Logo"/>
                 </Link>
-                <Link className="statistic-link" to="/">
+                <Link className="statistic-link" to="/statistic">
                     Statistika
                 </Link>
             </div>

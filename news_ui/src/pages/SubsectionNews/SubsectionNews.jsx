@@ -6,6 +6,8 @@ import {Breadcrumb, Col, List, Row} from "antd";
 import {getMenu} from "../../redux-store/menuSlice";
 import axios from "axios";
 import {addStatistic} from "../../redux-store/statisticSlice";
+import {formatString} from "../../util/helpers";
+import {getBrowserName, getOsName} from "../../util/helpers";
 
 const SubsectionNews = () => {
 
@@ -49,39 +51,6 @@ const SubsectionNews = () => {
         dispatch(addStatistic(data));
     }
 
-    const getOsName = (name) => {
-        let os = "Unknown OS";
-
-        if (name.indexOf("Win") !== -1) {
-            os = "Windows";
-        } else if (name.indexOf("Mac") !== -1) {
-            os = "Mac OS";
-        } else if (name.indexOf("Linux") !== -1) {
-            os = "Linux";
-        } else if (name.indexOf("Android") !== -1) {
-            os = "Android";
-        } else if (name.indexOf("like Mac") !== -1) {
-            os = "iOS";
-        }
-        return os;
-    }
-    const getBrowserName = (name) => {
-        let browserName = "Unknown Browser";
-
-        if (name.indexOf("Chrome") !== -1) {
-            browserName = "Chrome";
-        } else if (name.indexOf("Safari") !== -1) {
-            browserName = "Safari";
-        } else if (name.indexOf("Firefox") !== -1) {
-            browserName = "Firefox";
-        } else if (name.indexOf("MSIE") !== -1 || name.indexOf("Trident") !== -1) {
-            browserName = "Internet Explorer";
-        } else if (name.indexOf("Edge") !== -1) {
-            browserName = "Edge";
-        }
-
-        return browserName;
-    }
     const handleNavigate = (path, state) => {
         navigate(path, {state});
     };
@@ -130,9 +99,9 @@ const SubsectionNews = () => {
                         }}
                         dataSource={subsectionNews}
                         renderItem={(item) => {
-                            const foramattedRoditelj = item.roditeljNaziv?.trim().toLowerCase().replace(/ /g, '-');
-                            const foramattedMeni = item.meniNaziv?.trim().toLowerCase().replace(/ /g, '-');
-                            const foramattedNaslov = item.Naslov?.trim().toLowerCase().replace(/ /g, '-');
+                            const foramattedRoditelj = formatString(item.roditeljNaziv);
+                            const foramattedMeni = formatString(item.meniNaziv);
+                            const foramattedNaslov = formatString(item.Naslov);
                             return (
                                 <List.Item
 

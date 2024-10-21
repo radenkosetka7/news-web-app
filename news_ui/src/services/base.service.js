@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import {decodeJwt} from "../util/helpers";
 
 const baseService = axios.create({
     baseURL: "/",
@@ -8,33 +8,6 @@ const baseService = axios.create({
         "Accept": "application/json"
     }
 });
-
-function base64UrlDecode(str) {
-    str = str.replace(/-/g, '+').replace(/_/g, '/');
-
-    switch (str.length % 4) {
-        case 2:
-            str += '==';
-            break;
-        case 3:
-            str += '=';
-            break;
-    }
-
-    return atob(str);
-}
-
-function decodeJwt(token) {
-    const parts = token.split('.');
-
-    if (parts.length !== 3) {
-        throw new Error('Invalid JWT token');
-    }
-
-    const payload = base64UrlDecode(parts[1]);
-
-    return JSON.parse(payload);
-}
 
 const interceptor = store => {
     baseService.interceptors.request.use(

@@ -1,6 +1,7 @@
 package com.example.news_api.services.impl;
 
 import com.example.news_api.models.entities.Statistic;
+import com.example.news_api.models.entities.Statisticlast7day;
 import com.example.news_api.models.requests.StatisticRequest;
 import com.example.news_api.models.responses.StatisticLast7Days;
 import com.example.news_api.models.responses.StatisticResponse;
@@ -12,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;

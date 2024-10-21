@@ -8,10 +8,10 @@ import MainNewsSection from "../../components/MainNewsSection/MainNewsSection";
 import SideNewsSection from "../../components/SideNewsSection/SideNewsSection";
 import NewsListSection from "../../components/NewsListSection/NewsListSection";
 import './SectionNews.css'
+import {formatString} from "../../util/helpers";
 
 const SectionNews = () => {
     const location = useLocation();
-    //debugger
     const {meniId} = location.state || {};
     const sectionNews = useSelector((state) => state.news.sectionNews);
     const dispatch = useDispatch();
@@ -59,8 +59,8 @@ const SectionNews = () => {
                                         ),
                                     },
                                     ...(menuItem?.Kategorije?.map((category, index) => {
-                                        const formattedNaziv = menuItem?.Naziv.trim().toLowerCase().replace(/ /g, '-');
-                                        const formattedCategoryNaziv = category.Naziv.trim().toLowerCase().replace(/ /g, '-');
+                                        const formattedNaziv = formatString(menuItem?.Naziv);
+                                        const formattedCategoryNaziv = formatString(category.Naziv);
                                         return {
                                             title: (
                                                 <span

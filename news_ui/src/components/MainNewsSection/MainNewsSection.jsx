@@ -3,12 +3,14 @@ import { Col, Row } from 'antd';
 import './MainNewsSection.css';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {formatString} from "../../util/helpers";
+
 
 const MainNewsSection = ({Naslov,show, Datum, Slika,meniNaziv,vijestID,meniRoditelj}) => {
 
-    const foramattedNaslov = Naslov?.trim().toLowerCase().replace(/ /g, '-');
-    const foramattedMeniNaziv = meniNaziv?.trim().toLowerCase().replace(/ /g, '-');
-    const formmattedMenuNaziv = useSelector((state) => state.menu.items).find(item => item.meniID === meniRoditelj)?.Naziv?.trim().toLowerCase().replace(/ /g, '-');
+    const foramattedNaslov = formatString(Naslov);
+    const foramattedMeniNaziv = formatString(meniNaziv);
+    const formmattedMenuNaziv = formatString(useSelector((state) => state.menu.items).find(item => item.meniID === meniRoditelj)?.Naziv);
     return (
         <Row className="main-news" justify="center">
             <Col span={24}>

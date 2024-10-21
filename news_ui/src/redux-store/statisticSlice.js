@@ -1,23 +1,22 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import baseService from "../services/base.service";
+import {API_URL} from "../util/helpers";
 
 export const getLastWeekStatistics = createAsyncThunk("statistics/getLastWeekStatistics", async () => {
-    const url = `http://127.0.0.1:9001/api/v1/statistics/last-week`;
     return baseService
-        .get(url)
+        .get(API_URL+'api/v1/statistics/last-week')
         .then((results) => results.data);
 });
 
 export const getTop10News = createAsyncThunk("statistics/getTop10News", async () => {
-    const url = `http://127.0.0.1:9001/api/v1/comments/top-news`;
     return baseService
-        .get(url)
+        .get(API_URL+'api/v1/comments/top-news')
         .then((results) => results.data);
 });
+
 export const addStatistic = createAsyncThunk("statistics/postStatistic", async (data) => {
-    const url = `http://127.0.0.1:9001/api/v1/statistics`;
     return baseService
-        .post(url, data)
+        .post(API_URL+'api/v1/statistics', data)
         .then((results) => results.data);
 });
 
