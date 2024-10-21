@@ -5,6 +5,7 @@ import {getLastWeekStatistics, getTop10News} from "../../redux-store/statisticSl
 import {getTop10NewsWithDetails} from "../../redux-store/newsSlice";
 import PieChart from "../../components/PieChart/PieChart";
 import SideNewsSection from "../../components/SideNewsSection/SideNewsSection";
+import './Statistic.css'
 
 const Statistic = () => {
 
@@ -26,19 +27,22 @@ const Statistic = () => {
     return (
         <>
             <Row justify="center" style={{backgroundColor: "#016e9c"}}>
-                <Col span={11}>
-                    <label style={{fontSize: 'large', color: "white"}}>Statistika</label>
+                <Col span={20}>
+                    <label className="label-row">Statistika</label>
                 </Col>
             </Row>
             <Row justify={"center"}>
-                <Col span={8}>
-                    <PieChart data={stasticData}/>
-                </Col>
-                <Col span={3} style={{paddingTop: '20px'}}>
-                    <h4>Najpopularnije vijesti</h4>
-                    <Col span={6}>
-                        <SideNewsSection news={top10NewsDetails}/>
-                    </Col>
+                <Col span={20}>
+                    <Row justify={"space-between"}>
+                        <Col span={10}>
+                            <PieChart data={stasticData}/>
+                        </Col>
+                        <Col span={10} className="span-col">
+                            <h4>Najpopularnije vijesti</h4>
+                            <SideNewsSection news={top10NewsDetails}/>
+
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
         </>

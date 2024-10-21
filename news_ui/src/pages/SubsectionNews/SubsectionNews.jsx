@@ -60,7 +60,7 @@ const SubsectionNews = () => {
     };
 
     return (
-        <>
+        <div className="sub-div">
             <Row justify="center">
                 <Breadcrumb className="breadcrumb"
                             items={[
@@ -88,54 +88,55 @@ const SubsectionNews = () => {
             <hr className="hr-sub"/>
             <Row justify="center">
                 <Col span={16}>
-                    <List
-                        itemLayout="vertical"
-                        size="large"
-                        pagination={{
-                            onChange: handlePageChange,
-                            total: 500,
-                            showSizeChanger: false,
-                            pageSize: 15,
-                        }}
-                        dataSource={subsectionNews}
-                        renderItem={(item) => {
-                            const foramattedRoditelj = formatString(item.roditeljNaziv);
-                            const foramattedMeni = formatString(item.meniNaziv);
-                            const foramattedNaslov = formatString(item.Naslov);
-                            return (
-                                <List.Item
+                    {subsectionNews && subsectionNews.length > 0 &&
+                        <List
+                            itemLayout="vertical"
+                            size="large"
+                            pagination={{
+                                onChange: handlePageChange,
+                                total: subsectionNews.length === 15 ? 450 : 15,
+                                showSizeChanger: false,
+                                pageSize: 15,
+                            }}
+                            dataSource={subsectionNews}
+                            renderItem={(item) => {
+                                const foramattedRoditelj = formatString(item.roditeljNaziv);
+                                const foramattedMeni = formatString(item.meniNaziv);
+                                const foramattedNaslov = formatString(item.Naslov);
+                                return (
+                                    <List.Item
 
-                                    key={item.Naslov}
-                                    extra={
-                                        <img
-                                            width={272}
-                                            height={150}
-                                            alt="logo"
-                                            src={item.Slika}
-                                        />
-                                    }
-                                >
-                                    <Link
-                                        to={`/${foramattedRoditelj}/${foramattedMeni}/${foramattedNaslov}/${item.vijestID}`}>
-                                        <List.Item.Meta
-                                            title={item.Naslov}
-                                            description={
-                                                <>
-                                                    <div>{item.Datum}</div>
-                                                    <br/>
-                                                    <div>{item.Lid}</div>
-                                                </>
-                                            }
-                                        />
-                                        {item.content}
-                                    </Link>
-                                </List.Item>
-                            )
-                        }}
-                    />
+                                        key={item.Naslov}
+                                        extra={
+                                            <img
+                                                width={272}
+                                                height={150}
+                                                alt="logo"
+                                                src={item.Slika}
+                                            />
+                                        }
+                                    >
+                                        <Link
+                                            to={`/${foramattedRoditelj}/${foramattedMeni}/${foramattedNaslov}/${item.vijestID}`}>
+                                            <List.Item.Meta
+                                                title={item.Naslov}
+                                                description={
+                                                    <>
+                                                        <div>{item.Datum}</div>
+                                                        <br/>
+                                                        <div>{item.Lid}</div>
+                                                    </>
+                                                }
+                                            />
+                                            {item.content}
+                                        </Link>
+                                    </List.Item>
+                                )
+                            }}
+                        />}
                 </Col>
             </Row>
-        </>
+        </div>
     );
 
 }
