@@ -4,10 +4,10 @@ import {getAllSubsectionNews, setCurrentPage} from "../../redux-store/newsSlice"
 import {useDispatch, useSelector} from "react-redux";
 import {Breadcrumb, Col, List, Row} from "antd";
 import {getMenu} from "../../redux-store/menuSlice";
-import axios from "axios";
-import {addStatistic} from "../../redux-store/statisticSlice";
 import {formatString, getBrowserName, getOsName} from "../../util/helpers";
 import './SubsectionNews.css'
+import axios from "axios";
+import {addStatistic} from "../../redux-store/statisticSlice";
 
 const SubsectionNews = () => {
 

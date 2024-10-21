@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {Input} from 'antd';
+import {Row} from 'antd';
 import {Comment} from '@ant-design/compatible';
 import 'antd/dist/reset.css';
 import {useDispatch} from "react-redux";
-import {addComment, getAllNewsComments} from "../../redux-store/commentSlice";
+import {addComment, getAllNewsComments, getNewsCommentsCount} from "../../redux-store/commentSlice";
 import './Comments.css';
 import CommentList from "./CommentList";
 import Editor from "./Editor";
@@ -20,7 +20,6 @@ const Comments = ({id}) => {
         if (!value || !name) return;
         setSubmitting(true);
 
-        //const newComment = {name, comment: value};
         const data = {
             newsId: id,
             user: name,
@@ -28,13 +27,14 @@ const Comments = ({id}) => {
         };
         dispatch(addComment(data))
         setTimeout(() => {
-            dispatch(getAllNewsComments({id: id, page: 0, size: 10}));
+            dispatch(getNewsCommentsCount(id));
+            dispatch(getAllNewsComments({id: id, page: 0, size: 10, loadMore: false}));
         }, 1000);
         setComments([...comments, data]);
 
-        setSubmitting(false);
         setValue('');
         setName('');
+        setSubmitting(false);
     };
 
     const handleCommentChange = (e) => {
@@ -45,23 +45,23 @@ const Comments = ({id}) => {
         setName(e.target.value);
     };
 
-    return (<>
-        <Input
-            placeholder="Unesite ime"
-            value={name}
-            onChange={handleNameChange}
-        />
-        <Comment
-            content={<Editor
-                onChange={handleCommentChange}
-                onSubmit={handleSubmit}
-                submitting={submitting}
-                value={value}
-            />}
-        />
-        <br/>
-        <CommentList/>
-    </>);
+    return (
+        <Row className="comment-row-flex">
+            <Comment
+                content={
+                    <Editor
+                        onChange={handleCommentChange}
+                        onSubmit={handleSubmit}
+                        submitting={submitting}
+                        value={value}
+                        name={name}
+                        onNameChange={handleNameChange}
+                    />
+                }
+            />
+            <br/>
+            <CommentList newsId={id}/>
+        </Row>);
 };
 
 export default Comments;
