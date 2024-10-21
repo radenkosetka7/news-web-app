@@ -3,7 +3,6 @@ package com.example.news_api.models.responses;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class CommentResponse {
@@ -14,7 +13,6 @@ public class CommentResponse {
     private String content;
     private Date createdAt;
     private Integer parentCommentId;
-
 
 
 }
