@@ -69,48 +69,52 @@ const CommentList = () => {
     };
 
     return (
-        <List
-            className="comment-list"
-            header={`${newsComments.length} replies`}
-            itemLayout="horizontal"
-            dataSource={newsComments}
-            renderItem={(item) => (
-                <Card key={item.id}>
-                    <Comment
-                        author={item.user}
-                        content={item.content}
-                        actions={[
-                            <Button onClick={() => handleShowMore(item.id)}>
-                                {commentsVisibility[item.id] ? "Hide replies" : "Show more"}
-                            </Button>,
-                            <Button onClick={() => handleReply(item.id)}>
-                                {repliesVisibility[item.id] ? "Cancel" : "Reply"}
-                            </Button>
-                        ]}
-                    />
-                    {commentsVisibility[item.id] && (
-                        <ChildCommentList parentId={item.id}/>
-                    )}
-                    {repliesVisibility[item.id] && (
-                        <>
-                            <Input
-                                placeholder="Unesite ime"
-                                value={name}
-                                onChange={handleNameChange}
-                            />
+        <>
+            {newsComments && newsComments.length > 0 &&
+                <List
+                    className="comment-list"
+                    header={`${newsComments.length} replies`}
+                    itemLayout="horizontal"
+                    dataSource={newsComments}
+                    renderItem={(item) => (
+                        <Card key={item.id}>
                             <Comment
-                                content={<Editor
-                                    onChange={handleCommentChange}
-                                    onSubmit={handleSubmit}
-                                    submitting={submitting}
-                                    value={value}
-                                />}
+                                author={item.user}
+                                content={item.content}
+                                actions={[
+                                    <Button onClick={() => handleShowMore(item.id)}>
+                                        {commentsVisibility[item.id] ? "Hide replies" : "Show more"}
+                                    </Button>,
+                                    <Button onClick={() => handleReply(item.id)}>
+                                        {repliesVisibility[item.id] ? "Cancel" : "Reply"}
+                                    </Button>
+                                ]}
                             />
-                        </>
+                            {commentsVisibility[item.id] && (
+                                <ChildCommentList parentId={item.id}/>
+                            )}
+                            {repliesVisibility[item.id] && (
+                                <>
+                                    <Input
+                                        placeholder="Unesite ime"
+                                        value={name}
+                                        onChange={handleNameChange}
+                                    />
+                                    <Comment
+                                        content={<Editor
+                                            onChange={handleCommentChange}
+                                            onSubmit={handleSubmit}
+                                            submitting={submitting}
+                                            value={value}
+                                        />}
+                                    />
+                                </>
+                            )}
+                        </Card>
                     )}
-                </Card>
-            )}
-        />
+                />
+            }
+        </>
     );
 }
 

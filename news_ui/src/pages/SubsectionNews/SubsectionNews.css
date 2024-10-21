@@ -1,5 +1,8 @@
 
 .hr-sub {
-    width: 100%;
     border-color: gray;
+}
+
+.sub-div {
+    flex-grow: 1;
 }

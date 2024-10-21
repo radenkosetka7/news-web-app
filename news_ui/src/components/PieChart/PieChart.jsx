@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Pie} from 'react-chartjs-2';
 import {ArcElement, Chart as ChartJS, Legend, Tooltip} from 'chart.js';
 import {Card} from "antd";
+import './PieChart.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -42,9 +43,9 @@ const PieChart = ({data}) => {
     }, [data]);
 
     return (
-        <div style={{paddingTop: "10px"}}>
+        <div className="outer-div">
             {chartsData.length > 0 && chartsData.map((chart, index) => (
-                <div style={{paddingBottom: "10px"}} key={index}>
+                <div className="inner-div" key={index}>
                     <Card title={chart.label}>
                         <Pie data={chart}/>
                     </Card>
