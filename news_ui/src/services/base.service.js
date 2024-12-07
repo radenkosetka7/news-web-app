@@ -1,5 +1,5 @@
 import axios from "axios";
-import {decodeJwt} from "../util/helpers";
+import {API_URL, decodeJwt} from "../util/helpers";
 
 const baseService = axios.create({
     baseURL: "/",
@@ -49,7 +49,7 @@ const getNewToken = async () => {
         const request = {
             refreshToken: localStorage.getItem("refreshToken")
         };
-        const response = await axios.post('http://127.0.0.1:9001/api/v1/auth/token/refresh', request)
+        const response = await axios.post(API_URL + 'api/v1/auth/token/refresh', request)
 
         localStorage.setItem("accessToken", response.data.accessToken);
     } catch (e) {
