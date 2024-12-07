@@ -54,15 +54,24 @@ Comments are immediately visible after submission and do not require authenticat
 
 A simple nickname input is required for posting comments.
 
-Usage Statistics:
+**7. Usage Statistics**:
 
 Track user interactions with the application.
+
 Collect attributes such as:
+
 Date and time of use
+
 Visitor's IP address
+
 Browser and operating system details
+
 Country and city of the visitor
+
 Category, subcategory, and news article information
+
 Display the statistics for the last 7 days with graphical charts (e.g., pie charts, bar charts).
+
 Track the top 10 most commented news articles and provide links to view them.
+
 
